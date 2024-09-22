@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ashley Hughes - Lead Generation Expert</title>
+    <link rel="stylesheet" href="static/style.css"> <!-- Link to external CSS -->
+</head>
+<body>
+    <header>
+        <h1>Ashley Hughes</h1>
+        <p>Lead Generation Expert & Hobbyist Coder</p>
+    </header>
+    <nav>
+        <ul>
+            <li><a href="#about">About Me</a></li>
+            <li><a href="#services">Services</a></li>
+            <li><a href="#contact">Contact</a></li>
+            <li class="dropdown">
+                <a href="javascript:void(0)">More</a>
+                <div class="dropdown-content">
+                    <a href="#portfolio">Portfolio</a>
+                    <a href="#testimonials">Testimonials</a>
+                    <a href="#blog">Blog</a>
+                </div>
+            </li>
+        </ul>
+    </nav>
+    <section id="about">
+        <h2>About Me</h2>
+        <div class="about-content">
+            <div class="about-text">
+                <p>Hello! I'm Ashley Hughes, an expert in lead generation with a passion for coding. I help businesses grow by generating high-quality leads and optimizing their sales funnels. In my free time, I enjoy coding and exploring new technologies.</p>
+            </div>
+            <div class="profile-picture">
+                <img alt="Ashley Hughes" src="static/ashley.jpg"> <!-- Updated path -->
+            </div>
+        </div>
+    </section>
+    <section id="additional-info">
+        <h2>Additional Information</h2>
+        <div class="additional-info">
+            <div class="info-item">
+                <h3>Item 1</h3>
+                <p>Description of item 1.</p>
+                <button>Learn More</button>
+            </div>
+            <div class="info-item">
+                <h3>Item 2</h3>
+                <p>Description of item 2.</p>
+                <button>Learn More</button>
+            </div>
+            <div class="info-item">
+                <h3>Item 3</h3>
+                <p>Description of item 3.</p>
+                <button>Learn More</button>
+            </div>
+        </div>
+    </section>
+    <section id="contact">
+        <h2>Contact Me</h2>
+        <div class="contact-content">
+            <p>If you'd like to work with me or just say hello, feel free to reach out!</p>
+            <form action="mailto:ashley@example.com" method="post" enctype="text/plain">
+                <label for="name">Name:</label>
+                <input type="text" id="name" name="name" required>
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" required>
+                <label for="message">Message:</label>
+                <textarea id="message" name="message" required></textarea>
+                <button type="submit">Send</button>
+            </form>
+        </div>
+    </section>
+    <footer>
+        <p>© 2024 Ashley Hughes. All rights reserved.</p>
+    </footer>
+
+    <!-- Pop-up -->
+    <div id="popup" class="popup">
+        <div class="popup-content">
+            <h2>Sign up to my newsletter</h2>
+            <button id="popup-signup">Sign Up</button>
+        </div>
+    </div>
+
+    <!-- Link to your JavaScript file -->
+    <script src="static/index.js"></script> <!-- Updated path -->
+</body>
+</html>
