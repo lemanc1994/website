@@ -11,83 +11,146 @@ body {
     min-height: 100vh;
 }
 
-/* Center the table and give it a defined width */
-table {
-    width: 100%;
-    max-width: 700px;
-    margin: 0 auto;
-    border-collapse: collapse;
+/* Styling for tabs */
+.tabs {
     margin-bottom: 20px;
 }
 
-th, td {
-    padding: 8px 10px;
-    border: 1px solid #ddd;
-    text-align: center;
-}
-
-/* Ensure that the first column is wider for names */
-td:first-child, th:first-child {
-    width: 35%;
-    text-align: left;
-}
-
-td:nth-child(2), th:nth-child(2) {
-    width: 10%;
-}
-
-td:nth-child(3), th:nth-child(3) {
-    width: 55%;
-}
-
-/* Style the sliders and align them properly */
-input[type="range"] {
-    -webkit-appearance: none;
-    appearance: none;
-    width: 100%;
-    max-width: 150px;
+.tab-button {
+    padding: 10px 20px;
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    cursor: pointer;
     margin-right: 10px;
-    height: 8px; /* Set height for slider track */
-}
-
-input[type="range"]::-webkit-slider-runnable-track {
-    width: 100%;
-    height: 8px; /* Match the track height with the slider element */
-    background: #ddd;
     border-radius: 5px;
 }
 
-input[type="range"]::-webkit-slider-thumb {
-    -webkit-appearance: none;
-    appearance: none;
-    width: 20px; /* Size of the thumb */
-    height: 20px; /* Size of the thumb */
-    background-color: #4CAF50;
-    border-radius: 50%;
-    cursor: pointer;
-    border: 2px solid #000;
-    margin-top: -6px; /* Center the thumb by adjusting the vertical margin */
+.tab-button:hover {
+    background-color: #0056b3;
 }
 
-input[type="range"]::-webkit-slider-thumb:hover {
+/* Hide tab content by default */
+.tab-content {
+    display: none;
+}
+
+/* Show active tab content */
+.active {
+    display: block;
+}
+
+/* Style the name tags container */
+#name-tags-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center; /* Center the tags horizontally */
+    margin-bottom: 20px;
+}
+
+/* Style for individual name tags */
+.name-tag {
+    padding: 8px 12px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    flex-grow: 0; /* Prevents the tags from expanding */
+}
+
+/* Active state for name tags */
+.name-tag.active {
+    background-color: #007BFF;
+    color: white;
+}
+
+/* Style the reset button */
+.reset-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+}
+
+#reset-btn {
+    padding: 10px 20px;
+    background-color: #f44336; /* Red button */
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-size: 1em;
+    text-align: center;
+}
+
+#reset-btn:hover {
+    background-color: #d32f2f; /* Darker red on hover */
+}
+
+/* Style the "All People" list */
+#all-people-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    justify-content: center;
+}
+
+/* Style each person-item with a consistent width */
+.person-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 250px;
+    padding: 5px;
+    background-color: #f4f4f4;
+    border-radius: 8px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    margin-bottom: 10px;
+}
+
+/* Style for the input field for scores */
+.person-item input[type="number"] {
+    width: 60px;
+    padding: 5px;
+    text-align: center;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    margin-left: 10px;
+}
+
+/* Style for the submit button in the form */
+#submit-name-btn {
+    padding: 8px 12px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-left: 10px;
+}
+
+#submit-name-btn:hover {
     background-color: #45a049;
 }
 
-
-/* Span that displays the score next to the slider */
-span[id^="slider-value"] {
-    font-weight: bold;
-    color: #333;
-    width: 40px;
-    display: inline-block;
-    text-align: right;
+/* Style for the name input */
+#new-name-input {
+    width: 200px;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
 }
 
-/* Styling for the total score and warnings */
+/* Style the total score section */
+#results {
+    margin-top: 20px;
+    text-align: center;
+}
+
 #total-score {
     font-size: 1.2em;
-    margin-top: 10px;
-    text-align: center;
+    margin-bottom: 10px;
 }
 
 .decisionText {
@@ -103,30 +166,50 @@ span[id^="slider-value"] {
     background-color: green;
 }
 
-.life {
-    background-color: orange;
+/* Mobile-friendly adjustments */
+@media (max-width: 600px) {
+    #name-tags-container {
+        justify-content: center; /* Keep tags centered on mobile */
+    }
+
+    .name-tag {
+        padding: 6px 10px;
+        font-size: 0.9em;
+    }
+
+    .person-item {
+        width: 100%;
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .person-item input[type="number"] {
+        width: 100%;
+        margin-left: 0;
+        margin-top: 5px;
+    }
+
+    #submit-name-btn {
+        width: 100%;
+        margin-top: 10px;
+        text-align: center;
+    }
+
+    #new-name-input {
+        width: 100%;
+    }
 }
 
-/* Style for the reset container */
-.reset-container {
-    width: 100%;
-    display: flex;
-    justify-content: center; /* Center the button */
-    margin-top: 10px; /* Add some space above the button */
-}
-
-/* Style for the reset button */
-#reset-btn {
-    padding: 10px 20px;
-    background-color: #f44336; /* Red button */
+/* Style for the remove button in the person item */
+.remove-btn {
+    background-color: #f44336;
     color: white;
     border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
     cursor: pointer;
-    font-size: 1em;
-    text-align: center;
 }
 
-#reset-btn:hover {
-    background-color: #d32f2f; /* Darker red on hover */
+.remove-btn:hover {
+    background-color: #d32f2f;
 }
-

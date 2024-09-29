@@ -5,36 +5,44 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Drinking Situation Tracker</title>
     <link rel="stylesheet" href="/static/style.css">
-    <link rel="icon" href="/static/beer.png" type="image/png">
 </head>
 <body>
-    <h1>Drinking Situation Tracker</h1>
+    <h1>NightOut V 1.2</h1>
 
-    <table border="1">
-        <thead>
-            <tr>
-                <th>Name</th>
-                <th>Present</th>
-                <th>Risk Level</th>
-            </tr>
-        </thead>
-        <tbody id="people-list">
-            <!-- Rows will be dynamically generated here -->
-        </tbody>
-    </table>
-
-    <!-- Add Reset Button Below the Table -->
-    <div class="reset-container">
-        <button id="reset-btn">Reset to Zero</button>
+    <!-- Navigation for Tabs -->
+    <div class="tabs">
+        <button class="tab-button" onclick="showPage('tracker-page')">Tracker</button>
+        <button class="tab-button" onclick="showPage('people-page')">Available People</button>
     </div>
 
-    <div id="results">
-        <h3>Results</h3>
-        <div>Total Score: <span id="total-score">0</span></div>
+    <!-- Page 1: Drinking Situation Tracker -->
+    <div id="tracker-page" class="tab-content">
+        <!-- Name Tags Section -->
+        <div id="name-tags-container"></div>
+
+        <!-- Display the total score and decision -->
+        <div id="results">
+            <p id="total-score">Total Score: 0</p>
+            <p id="decision" class="decisionText safe">Can you drink? Yes</p>
+        </div>
+
+        <div class="reset-container">
+            <button id="reset-btn">Clear All</button>
+        </div>
     </div>
 
-    <div id="decision" class="safe">
-        <span class="decisionText">Can you drink? Yes</span>
+    <!-- Page 2: Available People -->
+    <div id="people-page" class="tab-content">
+        <h2>All Available People</h2>
+        <div id="all-people-list">
+            <!-- List of all people with score inputs -->
+        </div>
+
+        <!-- Add new name feature here -->
+        <div id="add-new-name-container">
+            <input type="text" id="new-name-input" placeholder="Enter new name">
+            <button id="submit-name-btn">Submit</button>
+        </div>
     </div>
 
     <script src="/static/index.js"></script>

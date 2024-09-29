@@ -1,206 +1,160 @@
-// Array of people and their respective scores
-const people = [
-    { name: "Jordan Kennedy", score: 0 },
-    { name: "Graham", score: 0 },
-    { name: "Jordan Yates", score: 0 },
-    { name: "James", score: 0 },
-    { name: "Josh", score: 0 },
-    { name: "Dave", score: 0 },
-    { name: "Brendan", score: 0 },
-    { name: "Amy", score: 0 },
-    { name: "Katie", score: 0 },
-    { name: "Sophie", score: 0 },
-    { name: "Stefan", score: 0 },
-    { name: "Lucy", score: 0 },
-    { name: "Becca", score: 0 },
-    { name: "Alex", score: 0 }
+let people = [
+    { name: 'Jordan K', score: 18, active: false },
+    { name: 'Graham', score: 20, active: false },
+    { name: 'Jordan Y', score: 9, active: false },
+    { name: 'James', score: 20, active: false },
+    { name: 'Josh', score: -5, active: false },
+    { name: 'Dave', score: 150, active: false },
+    { name: 'Brendan', score: 5, active: false },
+    { name: 'Amy', score: 20, active: false },
+    { name: 'Katie', score: 20, active: false },
+    { name: 'Sophie', score: 9, active: false },
+    { name: 'Stefan', score: -15, active: false },
+    { name: 'Lucy', score: -25, active: false },
+    { name: 'Becca', score: -25, active: false },
+    { name: 'Alex', score: 10, active: false }
 ];
 
-// Function to dynamically create the table rows with sliders
-function populatePeopleList() {
-    const peopleList = document.getElementById('people-list');
-    peopleList.innerHTML = ''; // Clear any existing content
+const nameTagsContainer = document.getElementById('name-tags-container');
+const newNameInput = document.getElementById('new-name-input');
+const submitNameBtn = document.getElementById('submit-name-btn');
+const allPeopleList = document.getElementById('all-people-list');
+
+// Function to show a specific page based on the tab selected
+function showPage(pageId) {
+    const tabs = document.getElementsByClassName('tab-content');
+    for (let tab of tabs) {
+        tab.classList.remove('active');
+    }
+    document.getElementById(pageId).classList.add('active');
+}
+
+// Function to generate the name tags on the tracker page
+function generateTags() {
+    nameTagsContainer.innerHTML = ''; // Clear the container
 
     people.forEach((person, index) => {
-        const row = document.createElement('tr');
-        row.innerHTML = `
-            <td>${person.name}</td>
-            <td><input type="checkbox" class="present-checkbox" data-index="${index}" onclick="updateScore()"></td>
-            <td>
-                <input type="range" class="score-slider" id="slider-${index}" min="-100" max="100" value="${person.score}"
-                oninput="updateSliderValue(${index})">
-                <span id="slider-value-${index}">(${person.score})</span> <!-- Display the score next to the slider -->
-            </td>
-        `;
-        peopleList.appendChild(row);
+        createTag(person.name, index);
     });
 }
 
-// Update the displayed value as the slider is moved
-function updateSliderValue(index) {
-    const slider = document.getElementById(`slider-${index}`);
-    const sliderValue = document.getElementById(`slider-value-${index}`);
-    const value = parseInt(slider.value);
-
-    // Update the score next to the slider
-    sliderValue.innerText = `(${value})`;
-
-    updateScore(); // Recalculate the total score
+// Function to create a tag on the Tracker page
+function createTag(name, index) {
+    const tag = document.createElement('button');
+    tag.innerHTML = name;
+    tag.classList.add('name-tag');
+    tag.setAttribute('data-index', index);
+    tag.addEventListener('click', () => togglePersonActive(index));
+    nameTagsContainer.appendChild(tag);
 }
 
-// Update total score based on selected people
-function updateScore() {
-    let totalScore = 0;
-    let hasChecked = false; // Flag to check if any checkbox is selected
-    const decisionElement = document.getElementById('decision');
+// Function to toggle whether a person is active or not
+function togglePersonActive(index) {
+    people[index].active = !people[index].active;
 
-    // Loop through all checkboxes to calculate the total score
-    document.querySelectorAll('#people-list input[type="checkbox"]').forEach(function (checkbox) {
-        const index = checkbox.getAttribute('data-index');
-        const score = parseInt(document.getElementById(`slider-${index}`).value);
-
-        if (checkbox.checked) {
-            totalScore += score;
-            hasChecked = true; // At least one checkbox is checked
-        }
-    });
-
-    // Update the total score in the UI
-    document.getElementById('total-score').innerText = "Total Score: " + totalScore;
-
-    // If no checkboxes are checked, hide the decision element
-    if (hasChecked) {
-        decisionElement.style.display = 'flex'; // Show the decision section if any checkbox is checked
-        updateDecision(totalScore); // Update the decision text and color based on score
+    const tagButton = document.querySelector(`[data-index="${index}"]`);
+    if (people[index].active) {
+        tagButton.classList.add('active');
     } else {
-        decisionElement.style.display = 'none'; // Hide the decision section if no checkboxes are checked
+        tagButton.classList.remove('active');
     }
+
+    // Update the total score based on active people
+    updateTotalScore();
 }
 
-// Update decision text and change class based on score
-function updateDecision(totalScore) {
-    const decisionElement = document.getElementById('decision');
-    const decisionText = decisionElement.querySelector('.decisionText');
-
-    // Remove all existing classes
-    decisionElement.classList.remove('safe', 'warning', 'life');
-
-    if (totalScore > 10) {
-        decisionElement.classList.add('warning'); // Add warning class
-        decisionText.innerHTML = 'Can you drink? No';
-    } else if (totalScore <= 10) {
-        decisionElement.classList.add('safe'); // Add safe class
-        decisionText.innerHTML = 'Safe to Drink';
-    } else {
-        decisionElement.classList.add('life'); // Add life class if other condition applies
-        decisionText.innerHTML = 'Stop!';
-    }
+// Function to update the person's score and refresh the available people list
+function updatePersonScore(index, score) {
+    people[index].score = parseInt(score);
+    updateTotalScore();
 }
 
-// Populate the people list on page load
-document.addEventListener('DOMContentLoaded', populatePeopleList);
-
-// Function to dynamically create the table rows with sliders
-function populatePeopleList() {
-    const peopleList = document.getElementById('people-list');
-    peopleList.innerHTML = ''; // Clear any existing content
+// Function to display all people in the "Available People" tab
+function displayAllPeople() {
+    allPeopleList.innerHTML = ''; // Clear the list
 
     people.forEach((person, index) => {
-        const row = document.createElement('tr');
-        row.innerHTML = `
-            <td>${person.name}</td>
-            <td><input type="checkbox" class="present-checkbox" data-index="${index}" onclick="updateScore()"></td>
-            <td>
-                <input type="range" class="score-slider" id="slider-${index}" min="-100" max="100" value="${person.score}"
-                oninput="updateSliderValue(${index})">
-                <span id="slider-value-${index}">(${person.score})</span> <!-- Display the score next to the slider -->
-            </td>
+        const personDiv = document.createElement('div');
+        personDiv.classList.add('person-item');
+
+        personDiv.innerHTML = `
+            <label>${person.name}</label>
+            <input type="number" value="${person.score}" data-index="${index}" onchange="updatePersonScore(${index}, this.value)">
+            <button class="remove-btn" onclick="removePerson(${index})">Remove</button>
         `;
-        peopleList.appendChild(row);
+        allPeopleList.appendChild(personDiv);
     });
 }
 
-// Function to reset all sliders and checkboxes to zero
-function resetToZero() {
-    document.querySelectorAll('.score-slider').forEach(function (slider) {
-        slider.value = 0; // Reset the slider value to zero
-        const index = slider.getAttribute('id').split('-')[1];
-        document.getElementById(`slider-value-${index}`).innerText = '(0)'; // Reset the displayed value to zero
+// Function to reset all scores and deactivate all people
+function resetAllScores() {
+    people.forEach((person, index) => {
+        person.score = 0;
+        person.active = false; // Reset the active state for everyone
+        updatePersonScore(index, 0);  // Reset the score for each person
     });
-
-    document.querySelectorAll('.present-checkbox').forEach(function (checkbox) {
-        checkbox.checked = false; // Uncheck all checkboxes
-    });
-
-    updateScore(); // Update the total score and decision after reset
+    generateTags(); // Regenerate tags to reset active classes
+    updateTotalScore();
 }
 
-// Update the displayed value as the slider is moved
-function updateSliderValue(index) {
-    const slider = document.getElementById(`slider-${index}`);
-    const sliderValue = document.getElementById(`slider-value-${index}`);
-    const value = parseInt(slider.value);
+// Function to update the total score based on active people
+function updateTotalScore() {
+    let totalScore = people.reduce((total, person) => {
+        return total + (person.active ? person.score : 0); // Only include active people's scores
+    }, 0);
 
-    // Update the score next to the slider
-    sliderValue.innerText = `(${value})`;
+    document.getElementById('total-score').textContent = `Total Score: ${totalScore}`;
 
-    updateScore(); // Recalculate the total score
-}
-
-// Update total score based on selected people
-function updateScore() {
-    let totalScore = 0;
-    let hasChecked = false; // Flag to check if any checkbox is selected
     const decisionElement = document.getElementById('decision');
-
-    // Loop through all checkboxes to calculate the total score
-    document.querySelectorAll('#people-list input[type="checkbox"]').forEach(function (checkbox) {
-        const index = checkbox.getAttribute('data-index');
-        const score = parseInt(document.getElementById(`slider-${index}`).value);
-
-        if (checkbox.checked) {
-            totalScore += score;
-            hasChecked = true; // At least one checkbox is checked
-        }
-    });
-
-    // Update the total score in the UI
-    document.getElementById('total-score').innerText = totalScore;
-
-    // If no checkboxes are checked, hide the decision element
-    if (hasChecked) {
-        decisionElement.style.display = 'flex'; // Show the decision section if any checkbox is checked
-        updateDecision(totalScore); // Update the decision text and color based on score
-    } else {
-        decisionElement.style.display = 'none'; // Hide the decision section if no checkboxes are checked
-    }
-}
-
-// Update decision text and change class based on score
-function updateDecision(totalScore) {
-    const decisionElement = document.getElementById('decision');
-    const decisionText = decisionElement.querySelector('.decisionText');
-
-    // Remove all existing classes
-    decisionElement.classList.remove('safe', 'warning', 'life');
-
     if (totalScore > 10) {
-        decisionElement.classList.add('warning'); // Add warning class
-        decisionText.innerHTML = 'Can you drink? No';
-    } else if (totalScore <= 10 && totalScore >= 0) {
-        decisionElement.classList.add('safe'); // Add safe class
-        decisionText.innerHTML = 'Can you drink? Yes';
+        decisionElement.textContent = "Can you drink? No";
+        decisionElement.classList.remove('safe');
+        decisionElement.classList.add('warning');
     } else {
-        decisionElement.classList.add('life'); // Add life class if other condition applies
-        decisionText.innerHTML = 'Special Condition!';
+        decisionElement.textContent = "Can you drink? Yes";
+        decisionElement.classList.remove('warning');
+        decisionElement.classList.add('safe');
     }
 }
 
-// Populate the people list on page load
-document.addEventListener('DOMContentLoaded', () => {
-    populatePeopleList();
+// Function to add a new person
+function addNewPerson() {
+    const newName = newNameInput.value.trim();
 
-    // Attach reset button event
-    document.getElementById('reset-btn').addEventListener('click', resetToZero);
+    if (newName === "") {
+        alert("Please enter a name.");
+        return;
+    }
+
+    // Add the new person to the list
+    const newIndex = people.length;
+    people.push({ name: newName, score: 0, active: false });
+
+    // Regenerate tags and refresh the available people list
+    generateTags();
+    displayAllPeople();
+
+    // Clear the input field
+    newNameInput.value = "";
+}
+
+// Function to remove a person from the list
+function removePerson(index) {
+    people.splice(index, 1);  // Remove the person from the array
+    generateTags();           // Regenerate the tags on the tracker page
+    displayAllPeople();       // Refresh the available people list
+}
+
+// Event listener for the 'Submit' button to add new person
+submitNameBtn.addEventListener('click', addNewPerson);
+
+// Event listener for the reset button
+document.getElementById('reset-btn').addEventListener('click', resetAllScores);
+
+// Initialize the tag generation and display of all people
+document.addEventListener('DOMContentLoaded', function () {
+    // Default to showing the tracker page
+    showPage('tracker-page');
+    generateTags(); // Generate tags on tracker page
+    displayAllPeople(); // Display all people on the Available People page
 });
-
