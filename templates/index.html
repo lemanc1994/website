@@ -3,16 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Drinking Situation Tracker</title>
+    <title>NightOut V 1.3</title>
     <link rel="stylesheet" href="/static/style.css">
+    <link rel="icon" href="/static/beer.png" type="image/png">
 </head>
 <body>
-    <h1>NightOut V 1.2</h1>
+    <h1>NightOut V 1.3</h1>
 
     <!-- Navigation for Tabs -->
     <div class="tabs">
         <button class="tab-button" onclick="showPage('tracker-page')">Tracker</button>
         <button class="tab-button" onclick="showPage('people-page')">Available People</button>
+        <button class="tab-button" onclick="showPage('drinks-page')">Drinks Tracker</button>
     </div>
 
     <!-- Page 1: Drinking Situation Tracker -->
@@ -25,15 +27,13 @@
             <p id="total-score">Total Score: 0</p>
             <p id="decision" class="decisionText safe">Can you drink? Yes</p>
         </div>
-
-        <div class="reset-container">
-            <button id="reset-btn">Clear All</button>
-        </div>
     </div>
+
+    <div id="total-spend-container">
+</div>
 
     <!-- Page 2: Available People -->
     <div id="people-page" class="tab-content">
-        <h2>All Available People</h2>
         <div id="all-people-list">
             <!-- List of all people with score inputs -->
         </div>
@@ -43,6 +43,46 @@
             <input type="text" id="new-name-input" placeholder="Enter new name">
             <button id="submit-name-btn">Submit</button>
         </div>
+    </div>
+
+    <!-- Page 3: Drinks Tracker -->
+    <div id="drinks-page" class="tab-content">
+        <h2>Drinks Tracker</h2>
+
+        <!-- Drink buttons section -->
+        <div id="drink-buttons-container"></div>
+
+        <!-- List of added drinks -->
+        <div id="drinks-list"></div>
+
+        <!-- Button to clear all drinks -->
+        <div class="reset-container">
+            <button id="clear-drinks-btn">Clear All Drinks</button>
+        </div>
+    </div>
+
+    <div>
+        <p>
+        <h2>NightOut V1.3 - Updates:</h2>
+            <h3>1. LocalStorage Integration</h3>
+New Feature: Data persistence using localStorage.
+Both the Tracker and Drinks Tracker pages will now save the names, scores, and added drinks.
+The state of the app will persist even after the page is refreshed or closed/reopened.
+<h3>2. Mobile UI Enhancements</h3>
+Tabs: The tabs for "Tracker", "Available People", and "Drinks Tracker" are now designed to fit on a single row on mobile, with a scroll bar if needed.
+<h3>3. Available People Page:</h3>
+Two people per row layout for mobile.
+Improved spacing between fields, preventing overlap between entries.
+Centered name and score fields for better alignment on mobile.
+<h3>4. Tracker Page</h3>
+UI Improvements: The styling for the name tags has been adjusted for a cleaner look across mobile and desktop.
+<h3>5. Drinks Tracker</h3>
+Drinks Buttons: The drink buttons (Larger, Wine, etc.) now match the style of the buttons on the Tracker page.
+LocalStorage: Added functionality to remember selected drinks even after refreshing the page.
+<h3>6. CSS Updates</h3>
+CSS has been adjusted for better responsiveness, including better handling of two-column layouts on mobile.
+Improved padding, spacing, and alignment for name tags and form fields.
+These changes have brought more functionality, better usability, and improved user experience across devices, especially with the new data persistence feature.</p>
     </div>
 
     <script src="/static/index.js"></script>
